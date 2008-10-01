@@ -73,8 +73,10 @@ One method is included into your active record class, which is pretty self expla
 
 <pre>
   def to_xml(options = {})
-    options[:except] ||= []
-    xml_protected_to_xml(options.merge(:except => options[:except].concat(self.class.protected_xml_attributes)))
+    xml_protected_to_xml(
+      options.merge(
+        :except => self.class.protected_xml_attributes + (options[:except] || [])
+    ))
   end
 </pre>
 
