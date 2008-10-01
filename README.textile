@@ -37,7 +37,7 @@ To enable the library your Rails 2.1 (or greater) project, use the gem configura
 
 <pre>
 Rails::Initializer.run do |config|
-  config.gem 'moorage-xml_protected', :lib => 'xml_protected', :source => 'http://gems.github.com'
+  config.gem 'thrivesmart-xml_protected', :lib => 'xml_protected', :source => 'http://gems.github.com'
 end
 </pre>
 
@@ -54,7 +54,7 @@ To get them installed on your system.
 Optionally, to unpack it into your application, just run:
 
 <pre>
-  rake gems:unpack GEM=moorage-xml_protected
+  rake gems:unpack GEM=thrivesmart-xml_protected
 </pre>
 
 

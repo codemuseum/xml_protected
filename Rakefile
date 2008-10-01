@@ -7,10 +7,10 @@ require 'date'
  
 GEM = "xml_protected"
 HUMANIZED_GEM = "XmlProtected"
-GEM_VERSION = "0.0.4"
+GEM_VERSION = "0.0.5"
 AUTHOR = "ThriveSmart, LLC"
 EMAIL = "developers@thrivesmart.com"
-HOMEPAGE = "http://www.github.com/moorage/xml_protected"
+HOMEPAGE = "http://www.github.com/thrivesmart/xml_protected"
 SUMMARY = "Keeps specified attributes of a model out of to_xml.  Do so by aliasing to_xml, and automatically sending in the correct :excludes to the original to_xml method, e.g. :excludes => [:attr1, :attr2, ...]"
  
 spec = Gem::Specification.new do |s|
