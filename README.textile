@@ -1,0 +1,83 @@
+h1. XmlProtected
+
+Keeps specified attributes of a model out of to_xml, by aliasing to_xml, and automatically sending in the correct <code>:excludes</code> to the original <code>to_xml</code> method, e.g. <code>:excludes => [:attr1, :attr2, ...]</code>
+
+NOTE: as of this time, it doesn't protect these attributes from reading.  For that, use this in conjunction with <code>:attr_protected</code>
+
+
+h2. Usage
+
+An ActiveRecord Model:
+
+<pre>
+class Model < ActiveRecord::Base
+  include XmlProtected # Required because it's a gemmefied plugin
+  xml_protected :attr1, :attr2, :attr3
+end
+</pre>
+
+You can also access these attributes from the added class method:
+
+<code>protected_xml_attributes</code>
+
+h3. In Conjunction with <code>attr_protected</code>
+
+
+<pre>
+class Model < ActiveRecord::Base
+  include XmlProtected # Required because it's a gemmefied plugin
+  attr_protected :attr1, :attr2, :attr3
+  xml_protected :attr1, :attr2, :attr3
+end
+</pre>
+
+h2. Installation
+
+To enable the library your Rails 2.1 (or greater) project, use the gem configuration method in "<code>config/environment.rb</code>"
+
+<pre>
+Rails::Initializer.run do |config|
+  config.gem 'moorage-xml_protected', :lib => 'xml_protected', :source => 'http://gems.github.com'
+end
+</pre>
+
+The <code>:lib</code> is important, because rails gets confused when the name of the gem is different from the library.
+
+And of course, run 
+
+<pre>
+  rake gems:install
+</pre>
+
+To get them installed on your system.
+
+Optionally, to unpack it into your application, just run:
+
+<pre>
+  rake gems:unpack GEM=moorage-xml_protected
+</pre>
+
+
+h2. How it works
+
+Two methods are extended onto your active record class:
+
+1. <code>xml_protected(*attributes)</code>
+2. <code>protected_xml_attributes</code>
+
+1. Adds to the inheritable attribute "xml_protected_attrs" the attributes that are speicified in this call.  If this is the first time the method is called, it also aliases the old to_xml, and specified a new one which reads from these xml_protected_attrs
+
+2. Simply returns the values currently in "xml_protected_attrs".
+
+One method is included into your active record class, which is pretty self explanatory:
+
+<pre>
+  def to_xml(options = {})
+    options[:except] ||= []
+    xml_protected_to_xml(options.merge(:except => options[:except].concat(self.class.protected_xml_attributes)))
+  end
+</pre>
+
+h2. Copyright & License
+
+Copyright (c) 2008 ThriveSmart, LLC, released under the MIT license
